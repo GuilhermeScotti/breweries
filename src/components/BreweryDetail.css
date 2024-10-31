@@ -1,0 +1,17 @@
+.brewery-card {
+  background-color: #ffffc878;
+  padding: 20px;
+  width: 350px;
+  border-radius: 8px;
+}
+.brewery-card h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+.brewery-info {
+  margin-bottom: 10px;
+}
+.brewery-info strong {
+  color: #3c6e71;
+  font-weight: bold;
+}

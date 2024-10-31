@@ -13,6 +13,12 @@ const Stats = ({ metadata, params }) => {
   const [stateStats, setStateStats] = useState({});
   const [cityStats, setCityStats] = useState({});
   const [top10states, setTop10states] = useState([]);
+  const [isToggled, setIsToggled] = useState(false);
+
+  // Function to toggle state
+  const toggle = () => {
+    setIsToggled((prev) => !prev);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,47 +81,55 @@ const Stats = ({ metadata, params }) => {
 
   return (
     <div>
-      <div className="container">
-        <div className="card">Total Breweries: {metadata.total}</div>
-        <div className="card">
-          Highest State Count: {stateStats.mostCommon} - {stateStats.count}
-        </div>
-        <div className="card">
-          Highest City Count: {cityStats.mostCommon} - {cityStats.count}
-        </div>
+      <div>
+        <button onClick={toggle}>Toggle View</button>
+        <p>Current View: {isToggled ? "Chart" : "Top State"}</p>
       </div>
+      {isToggled ? (
+        <div className="container">
+          <div className="card">Total Breweries: {metadata.total}</div>
+          <div className="card">
+            Highest State Count: {stateStats.mostCommon} - {stateStats.count}
+          </div>
+          <div className="card">
+            Highest City Count: {cityStats.mostCommon} - {cityStats.count}
+          </div>
+        </div>
+      ) : (
+        <>
+          <div>Top 10 States</div>
 
-      <div>Top 10 States</div>
-
-      <div className="container">
-        <BarChart
-          width={600}
-          height={400}
-          data={top10states}
-          layout="vertical"
-          margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            type="number"
-            label={{
-              value: "Number of Breweries",
-              position: "insideBottom",
-              offset: -5,
-            }}
-          />
-          <YAxis
-            type="category"
-            dataKey="state"
-            label={{ angle: -90, position: "insideLeft" }}
-            offset={-10}
-          />
-          <Tooltip fill="#fff" />
-          <Bar dataKey="count" fill="#8884d8">
-            <LabelList dataKey="count" position="insideRight" fill="#fff" />
-          </Bar>
-        </BarChart>
-      </div>
+          <div className="container">
+            <BarChart
+              width={600}
+              height={400}
+              data={top10states}
+              layout="vertical"
+              margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis
+                type="number"
+                label={{
+                  value: "Number of Breweries",
+                  position: "insideBottom",
+                  offset: -5,
+                }}
+              />
+              <YAxis
+                type="category"
+                dataKey="state"
+                label={{ angle: -90, position: "insideLeft" }}
+                offset={-10}
+              />
+              <Tooltip fill="#fff" />
+              <Bar dataKey="count" fill="#8884d8">
+                <LabelList dataKey="count" position="insideRight" fill="#fff" />
+              </Bar>
+            </BarChart>
+          </div>
+        </>
+      )}
     </div>
   );
 };
