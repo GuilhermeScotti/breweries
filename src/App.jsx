@@ -58,9 +58,10 @@ const App = () => {
 
   return (
     <>
-      <h2>South Korean Breweries</h2>
+      <h2>USA Breweries</h2>
 
       <Stats metadata={metadata} max_pages={maxPages} params={queryParams} />
+      <br />
 
       <div className="container column">
         <Breweries breweries={breweries} />
